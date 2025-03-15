@@ -33,7 +33,7 @@ class OpenGLPointRenderer:
         glfw.make_context_current(self.window)
         glEnable(GL_DEPTH_TEST)  # Enable depth testing for proper 3D rendering
         glEnable(GL_POINT_SMOOTH)
-        glPointSize(10)
+        glPointSize(20)
         
         # Set background color to white
         glClearColor(1.0, 1.0, 1.0, 1.0)

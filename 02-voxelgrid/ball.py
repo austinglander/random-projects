@@ -51,7 +51,7 @@ def animate_bouncy_ball(anim_time):
         last_t = time()
         next_pos = ball_pos + ball_velocity.scale(dt)
 
-        if time() - last_fling > 10:
+        if time() - last_fling > 5:
             last_fling = time()
             ball_velocity = vector(randint(5, 15)*choice([-1,1]), randint(5, 15)*choice([-1,1]), sqrt(2*gravity*(7 + collision_tolerance - 2*radius)))
         if next_pos.z - radius < 0 - collision_tolerance or next_pos.z + radius > 7 + collision_tolerance:
@@ -69,5 +69,4 @@ def animate_bouncy_ball(anim_time):
         show_ball()
             
 if __name__ == "__main__":
-    print("1")
     animate_bouncy_ball(999999)

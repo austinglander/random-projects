@@ -10,9 +10,9 @@ from protocol_conversion import to_protocol
 
 
 # 1 in ___ per tick
-chance = 12
-initial_velocity = 10
-acceleration = 375
+chance = 50
+initial_velocity = 5
+acceleration = 20
 
 def animate_raindrops(anim_time):
     active_raindrops = []
@@ -53,8 +53,8 @@ def animate_raindrops(anim_time):
                 
         for puddle in active_puddles:
             puddle_t0, pos, size = puddle
-            # Let puddle persist for 1 second
-            if t - puddle_t0 > 0.1:
+            # Let puddle persist for 0.3 seconds
+            if t - puddle_t0 > 0.3:
                 active_puddles.remove(puddle)
                 continue
             else:

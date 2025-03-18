@@ -180,9 +180,6 @@ class OpenGLPointRenderer:
             glfw.terminate()
             return
         
-        # If we can't control the camera, rotate automatically
-        if not self.allow_camera_control:
-            gluLookAt(4, 4, 4)
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         glLoadIdentity()
         
@@ -212,7 +209,7 @@ class OpenGLPointRenderer:
         glfw.poll_events()
     
     def update_movement(self):
-        move_speed = 0.05  # Adjust speed as needed
+        move_speed = 0.01  # Adjust speed as needed
         for key in self.movement_keys:
             if key == glfw.KEY_W:
                 self.move_camera(dz=-move_speed)
@@ -239,7 +236,7 @@ class OpenGLPointRenderer:
 #     renderer.render()
 
 
-renderer = OpenGLPointRenderer(allow_camera_control=False)
+renderer = OpenGLPointRenderer(allow_camera_control=True)
 def send_frame(frame: bytearray) -> None:
     """
     Renders a frame passed as input.\n

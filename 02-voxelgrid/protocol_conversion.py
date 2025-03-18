@@ -31,3 +31,8 @@ def from_protocol(protocol_frame: list[int]) -> list[list[bitarray]]:
                 frame[x][y][z] = x_vals[(7-x)]
     return frame
                 
+def empty_frame() -> list[list[bitarray]]:
+    """
+    Returns an empty 3D 8x8x8 array to be used to store coordinates
+    """
+    return [[bitarray([0 for k in range(16)]) for j in range(16)] for i in range(16)]

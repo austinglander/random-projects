@@ -12,13 +12,14 @@ import time
 
 # ChatGPT thank you for the PointRenderer 🙏
 class OpenGLPointRenderer:
-    def __init__(self, spacing=1.0):
+    def __init__(self, spacing=1.0, allow_camera_control=True):
         self.movement_keys = set()
         self.spacing = spacing
         self.points = []
-        self.camera_position = [4, 2, -20]  # Initial camera position
-        self.camera_rotation = [180, 0]  # Yaw (left/right), Pitch (up/down)
+        self.camera_position = [-17, 7, 7]  # Initial camera position
+        self.camera_rotation = [80, 16]  # Yaw (left/right), Pitch (up/down)
         self.mouse_last_pos = None
+        self.allow_camera_control = allow_camera_control
         self.init_window()
     
     def init_window(self):
@@ -43,6 +44,10 @@ class OpenGLPointRenderer:
         glfw.set_cursor_pos_callback(self.window, self.mouse_callback)
         glfw.set_input_mode(self.window, glfw.CURSOR, glfw.CURSOR_DISABLED)  # Hide cursor for FPS-like control
     
+    def set_camera_control(self, enabled):
+        """Enable or disable camera control dynamically"""
+        self.allow_camera_control = enabled
+
     def update_points(self, points_3d):
         """Correctly maps the coordinate system to OpenGL's format."""
         self.points = []
@@ -64,6 +69,9 @@ class OpenGLPointRenderer:
         if key == glfw.KEY_ESCAPE and action == glfw.PRESS:
             glfw.set_window_should_close(window, True)
         
+        if not self.allow_camera_control:
+            return # Ignore movement keys if camera control is disabled
+
         if action == glfw.PRESS:
             self.movement_keys.add(key)
         elif action == glfw.RELEASE:
@@ -119,6 +127,9 @@ class OpenGLPointRenderer:
     
     def mouse_callback(self, window, xpos, ypos):
         """Handles mouse movement for camera rotation."""
+        if not self.allow_camera_control:
+            return # Ignore mouse input if camera control is disabled
+
         if self.mouse_last_pos is None:
             self.mouse_last_pos = (xpos, ypos)
             return
@@ -169,6 +180,9 @@ class OpenGLPointRenderer:
             glfw.terminate()
             return
         
+        # If we can't control the camera, rotate automatically
+        if not self.allow_camera_control:
+            gluLookAt(4, 4, 4)
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         glLoadIdentity()
         
@@ -225,7 +239,7 @@ class OpenGLPointRenderer:
 #     renderer.render()
 
 
-renderer = OpenGLPointRenderer()
+renderer = OpenGLPointRenderer(allow_camera_control=False)
 def send_frame(frame: bytearray) -> None:
     """
     Renders a frame passed as input.\n

@@ -98,15 +98,15 @@ PIXEL_FONT_3X5 = {
     'M': [
         [1,0,1],
         [1,1,1],
-        [1,1,1],
+        [1,0,1],
         [1,0,1],
         [1,0,1]
     ],
     'N': [
+        [1,1,1],
         [1,0,1],
-        [1,1,1],
-        [1,1,1],
-        [1,1,1],
+        [1,0,1],
+        [1,0,1],
         [1,0,1]
     ],
     'O': [
@@ -168,7 +168,7 @@ PIXEL_FONT_3X5 = {
     'W': [
         [1,0,1],
         [1,0,1],
-        [1,1,1],
+        [1,0,1],
         [1,1,1],
         [1,0,1]
     ],
@@ -263,7 +263,7 @@ PIXEL_FONT_3X5 = {
         [1,0,1],
         [1,1,1],
         [0,0,1],
-        [1,1,1]
+        [0,0,1]
     ]
 }
 
@@ -323,4 +323,4 @@ def empty_frame() -> list[list[bitarray]]:
     """
     Returns an empty 3D 8x8x8 array to be used to store coordinates
     """
-    return [[bitarray([0 for k in range(16)]) for j in range(16)] for i in range(16)]
+    return [[bitarray([0 for k in range(8)]) for j in range(8)] for i in range(8)]

@@ -2,6 +2,7 @@ from cube_control import send_frame
 from time import time, sleep
 from cube_utils import to_protocol, empty_frame, write_string
 import numpy as np
+import os
 
 # https://www.youtube.com/watch?v=FtutLA63Cp8
 LAST_FRAME = 6571
@@ -16,10 +17,7 @@ def display_count_down(seconds: int):
     while (count_down > 0):
         t0 = time()
         out_frame = empty_frame()
-        right = 7
-        for digit in reversed(str(min(count_down, 99))):
-            write_string(out_frame, digit)
-            right -= 4
+        write_string(out_frame, str(count_down))
         send_frame(to_protocol(out_frame))
         count_down -= 1
         # Sleep for 1 second, factoring in the time it took for the above operations
@@ -30,14 +28,13 @@ def bad_apple():
     """
     Plays bad apple on the front 8x8 plane of the cube
     """
-    # Requires frames to be stored in the relative path bad_apple_frames/frame_0000.npy
-    # T-up the first frame before starting our rendering loop
+    # Requires frames to be stored in the relative path bad_apple_frames/frame_xxxx.npy
     frame_count = 0
     t0 = time()
     while frame_count <= LAST_FRAME:
         # Ready up our next frame
         frame = empty_frame()
-        frame[0] = np.load(f"bad_apple_frames/frame_{frame_count:04}.npy").tolist()
+        frame[0] = np.load(os.path.join(os.path.dirname(__file__), f"bad_apple_frames/frame_{frame_count:04}.npy")).tolist()
         send_frame(to_protocol(frame))
         frame_count += 1
 
@@ -54,5 +51,5 @@ def bad_apple():
 
 
 if __name__ == "__main__":
-    display_count_down(3)
+    display_count_down(10)
     bad_apple()

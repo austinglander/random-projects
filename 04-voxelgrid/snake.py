@@ -13,7 +13,6 @@ import keyboard
 DIRECTIONS = ((1, 0, 0), (-1, 0, 0), (0, -1, 0), (0, 1, 0), (0, 0, 1), (0, 0, -1)) # w s a d q e
 direction = (0, 0, 0) # Initialize direction to 0 to wait for player input to start moving
 
-
 def get_bot_direction(head: tuple) -> tuple:
     """
     Returns a new direction for the snake to travel given its current direction and head position\n
@@ -68,10 +67,9 @@ def get_bot_direction(head: tuple) -> tuple:
     
     return direction
 
-def update_direction(e) -> None:
+def update_direction(e: keyboard.KeyboardEvent) -> None:
     """
-    Update direction depending on contents of the keypress event\n
-    To be used by keyboard.on_press
+    Callback function to update direction on keypress
     """
     global direction
     if e.name == "w" and direction not in DIRECTIONS[0:2]:
@@ -151,10 +149,10 @@ def play_snake(tickrate: float = 0.3, invincible: bool = False, coyote_time_tick
     # Maybe I could have some fun physics animations at the end? Fireworks maybe?
     print(f"Score: {score}")
     end_frame = empty_frame()
-    write_string(end_frame, min(99, score)) # Cap score display at 99
+    write_string(end_frame, str(min(99, score))) # Cap score display at 99
     while True:
         send_frame(to_protocol(end_frame))
 
 
 if __name__ == "__main__":
-    play_snake(tickrate=0, coyote_time_ticks=2, invincible=False, bot=True)
+    play_snake(tickrate=0.3, coyote_time_ticks=2, invincible=False, bot=False)

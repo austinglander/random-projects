@@ -13,7 +13,7 @@ class vector:
     
     def __sub__(self, other):
         return vector(self.x - other.x, self.y - other.y, self.z - other.z)
-
+    
     def scale(self, factor):
         return vector(self.x * factor, self.y * factor, self.z * factor)
 
@@ -37,3 +37,12 @@ class vector:
         xr = self.x*cos(angle) + self.y*sin(angle)
         yr = self.y*cos(angle) - self.x*sin(angle)
         return vector(xr, yr, self.z)
+    
+    def get_rounded_pos(self) -> tuple:
+        """
+        Returns a tuple of the vector's rounded coordinates
+        """
+        return round(self.x), round(self.y), round(self.z)
+
+    def __repr__(self):
+        return f"({self.x}, {self.y}, {self.z})"

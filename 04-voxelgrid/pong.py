@@ -185,7 +185,7 @@ def play_pong():
         left_moved = False
         right_moved = False
         ball = vector(3.5, 3.5, 3.5)
-        velocity = vector(uniform(-1, 1), choice([uniform(-1,-0.5), uniform(0.5, 1)]), uniform(-1, 1))
+        velocity = vector(uniform(-1, 1), choice([uniform(-0.8,-0.2), uniform(0.2, 0.8)]), uniform(-1, 1))
         velocity = velocity.scale(BALL_SPEED / velocity.mag())
 
 

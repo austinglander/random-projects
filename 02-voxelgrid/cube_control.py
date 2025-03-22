@@ -7,8 +7,13 @@ from OpenGL.GL import *
 from OpenGL.GLU import *
 import numpy as np
 import math
-from protocol_conversion import from_protocol
+from cube_utils import from_protocol
 import time
+
+# Set to TRUE to make background white and points blue.
+# Set to FALSE to make background black and points white
+WHITE_BG = True
+POINT_SIZE = 30
 
 # ChatGPT thank you for the PointRenderer 🙏
 class OpenGLPointRenderer:
@@ -34,10 +39,13 @@ class OpenGLPointRenderer:
         glfw.make_context_current(self.window)
         glEnable(GL_DEPTH_TEST)  # Enable depth testing for proper 3D rendering
         glEnable(GL_POINT_SMOOTH)
-        glPointSize(20)
+        glPointSize(POINT_SIZE)
         
-        # Set background color to white
-        glClearColor(1.0, 1.0, 1.0, 1.0)
+        # Set background color to white or black
+        if WHITE_BG:
+            glClearColor(1.0, 1.0, 1.0, 1.0)
+        else:
+            glClearColor(0.0, 0.0, 0.0, 0.0)
         
         # Set up input callbacks
         glfw.set_key_callback(self.window, self.key_callback)
@@ -144,8 +152,12 @@ class OpenGLPointRenderer:
     
     def draw_wireframe_box(self):
         """Draws a black wireframe box from (-0.5,-0.5,-0.5) to (7.5,7.5,7.5) with a solid black bottom face."""
-        glColor3f(0.75, 0.75, 0.75)  # Set color to light gray for the bottom face
-        
+        # Make the frame different shades of gray
+        if WHITE_BG:
+            glColor3f(0.75, 0.75, 0.75)
+        else:
+            glColor3f(0.4, 0.4, 0.4)
+
         # Draw solid bottom face
         glBegin(GL_QUADS)
         glVertex3f(-0.5, -0.5, -0.5)
@@ -155,6 +167,7 @@ class OpenGLPointRenderer:
         glEnd()
         
         # Draw wireframe
+
         glBegin(GL_LINES)
         for x in (-0.5, 7.5):
             for y in (-0.5, 7.5):
@@ -200,7 +213,10 @@ class OpenGLPointRenderer:
         
         # Render points
         glBegin(GL_POINTS)
-        glColor3f(0.0, 0.0, 1.0)  # Light blue points
+        if WHITE_BG:
+            glColor3f(0.0, 0.0, 1.0) # Light blue points
+        else:
+            glColor3f(1.0, 1.0, 1.0) # White points
         for x, y, z in self.points:
             glVertex3f(x, y, z)
         glEnd()

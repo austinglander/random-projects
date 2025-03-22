@@ -119,8 +119,8 @@ def play_pong():
 
     t0 = time()
     gamestate = 0 # 0 - continue; 1 - point for left; 2 - point for right
-    left_score = 8
-    right_score = 8
+    left_score = 0
+    right_score = 0
     while True:
         # Sit here until both players have moved
         while not (left_moved and right_moved):

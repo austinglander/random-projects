@@ -3,6 +3,7 @@ from time import time, sleep
 from cube_utils import to_protocol, empty_frame, write_string
 import numpy as np
 
+# https://www.youtube.com/watch?v=FtutLA63Cp8
 LAST_FRAME = 6571
 
 def display_count_down(seconds: int):
